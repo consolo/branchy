@@ -1,0 +1,55 @@
+== Branchy
+
+Branchy is a library for getting the name of the branch you're on. Lame, right? But its real purpose is to make it very easy to use
+the branched database pattern in Ruby, where each branch in your project has its own database. Rails was the original use-case, but
+there's nothing Rails-specific in it - you should be able to use it with just about any Ruby ORM. That said, all examples assume
+Rails and ActiveRecord. Salt to taste.
+
+Supported SCMs:
+* git
+
+== The Branched Database Pattern
+
+Do you use feature branches for development? Are you in migration hell, fighting merge conflicts in schema.rb and running into exceptions 
+caused by database changes from other branches? The branched database pattern might be what you're looking for. Each branch has its 
+own database, isolating it from any other branch's changes.
+
+NOTE Branched databases work best when everyone on your team uses them and practices good database migration habits. A more complete
+write-up on that subject can be found at http://jordanhollinger.com/2014/07/30/rails-migration-etiquette/. These are the highlights:
+* Use schema.rb to create your database (rake db:schema:load or rake db:setup).
+* After running migrations locally, commit the resulting changes in schema.rb.
+* Use branched databases to keep each branch's schema changes isolated.
+
+== Installation
+In your Gemfile:
+
+  group :development, :test do
+    gem 'branchy'
+  end
+
+== Use in database.yml
+You probably only want to use it in your development and test environments.
+For a branch called "widgets" the database would be "foobar_development_widgets".
+
+  development:
+    database: <%= Branchy.git.db 'foobar_development'
+    ...
+
+== A database for EVERY branch? Overkill much?
+Maybe. If you have lots branches without schema changes, you might want to enable branchy on a per-branch basis. There's a command-line
+utility for this:
+
+  $ git checkout my_branch
+  $ branchy --enable
+
+Then in your database.yml file use the "db_if_enabled" method. It the current branch isn't branchy-enabled it will simply return
+the prefix you passed to it.
+
+  development:
+    database: <%= Branchy.git.db_if_enabled 'foobar_development'
+    ...
+
+== License
+Copyright 2014 Consolo Services Group
+
+Licensed under the MIT License
