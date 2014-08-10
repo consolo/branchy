@@ -19,6 +19,7 @@ write-up on that subject can be found at http://jordanhollinger.com/2014/07/30/r
 * Use schema.rb to create your database (rake db:schema:load or rake db:setup).
 * After running migrations locally, commit the resulting changes in schema.rb.
 * Use branched databases to keep each branch's schema changes isolated.
+* Remember to restart your local Rails server after switching branches.
 
 == Installation
 In your Gemfile:
@@ -32,7 +33,7 @@ You probably only want to use it in your development and test environments.
 For a branch called "widgets" the database would be "foobar_development_widgets".
 
   development:
-    database: <%= Branchy.git.db 'foobar_development'
+    database: <%= Branchy.git.db 'foobar_development' %>
     ...
 
 == A database for EVERY branch? Overkill much?
@@ -43,10 +44,10 @@ utility for this:
   $ branchy --enable
 
 Then in your database.yml file use the "db_if_enabled" method. It the current branch isn't branchy-enabled it will simply return
-the prefix you passed to it.
+whatever string your passed.
 
   development:
-    database: <%= Branchy.git.db_if_enabled 'foobar_development'
+    database: <%= Branchy.git.db_if_enabled 'foobar_development' %>
     ...
 
 == License
