@@ -17,7 +17,7 @@ module Branchy
 
       # Returns true if this git branch has been configured with a branched database
       def self.enabled?
-        exec_or_raise("git config --bool branch.#{branch}.database") == 'true'
+        exec_or_raise("git config --bool branch.#{branch}.database", [0,1]) == 'true'
       end
 
       # Enables a database for this git branch
