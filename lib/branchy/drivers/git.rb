@@ -3,30 +3,30 @@ module Branchy
   module Drivers
     # A Branchy driver for git
     class Git
-      include ::Branchy::CLI
+      extend ::Branchy::CLI
 
       # Returns the git branch name
-      def branch
+      def self.branch
         exec_or_raise('git symbolic-ref HEAD').sub('refs/heads/', '')
       end
 
       # Returns true if it's the master/trunk/mainline branch.
-      def trunk?
+      def self.trunk?
         branch == 'master'
       end
 
       # Returns true if this git branch has been configured with a branched database
-      def enabled?
+      def self.enabled?
         exec_or_raise("git config --bool branch.#{branch}.database") == 'true'
       end
 
       # Enables a database for this git branch
-      def enable!
+      def self.enable!
         exec_or_raise("git config --bool branch.#{branch}.database true")
       end
 
       # Disables a database for this git branch
-      def disable!
+      def self.disable!
         exec_or_raise("git config --bool branch.#{branch}.database false")
       end
     end

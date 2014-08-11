@@ -24,7 +24,7 @@
 module Branchy
   # Returns a new Branchy object initialized for use with git
   def self.git
-    Branch.new(Drivers::Git.new)
+    Branch.new(Drivers::Git)
   end
 
   # A class for getting a branch's database name
