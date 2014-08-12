@@ -25,7 +25,7 @@ write-up on that subject can be found at http://jordanhollinger.com/2014/07/30/r
 In your Gemfile:
 
   group :development, :test do
-    gem 'branchy'
+    gem 'branchy', git: 'git://github.com/consolo/branchy.git'
   end
 
 == Use in database.yml
@@ -49,6 +49,15 @@ whatever string your passed.
   development:
     database: <%= Branchy.git.db_if_enabled 'foobar_development' %>
     ...
+
+== You don't even NEED this library
+It's really just a convenient way to share the idea. You can get 90% of the functionality in database.yml with:
+
+    <% branch = `git rev-parse --abbrev-ref HEAD`.chomp %>
+
+    development:
+      database: my_project_development_<%= branch %>
+      ...
 
 == License
 Copyright 2014 Consolo Services Group
