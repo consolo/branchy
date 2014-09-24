@@ -47,7 +47,7 @@ module Branchy
     # If it's the master/trunk/mainline branch only the prefix is returned.
     def database(prefix)
       db_name = scm.trunk? ? prefix : "#{prefix}_#{name}"
-      db_name.gsub(/[^A-Za-z0-9_]+/, '_')
+      db_name.gsub(/[^A-Za-z0-9_]+/, '_')[0, 63]
     end
 
     alias_method :db, :database
