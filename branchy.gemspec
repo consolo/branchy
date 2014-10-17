@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.licenses = ['MIT']
   s.summary = "Branched database helpers"
   s.description = "Use a different database for each of your branches!"
-  s.date = '2014-08-07'
-  s.authors = ['Jordan Hollinger']
+  s.date = '2014-10-17'
+  s.authors = ['Andrew Coleman', 'Jordan Hollinger']
   s.email = 'jordan@jordanhollinger.com'
   s.homepage = 'http://github.com/consolo/branchy'
   s.require_paths = ['lib']
