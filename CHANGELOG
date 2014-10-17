@@ -1,0 +1,5 @@
+0.0.2 (2014-10-17)
+- Respect the 64 char name limit in many db's
+
+0.0.1 (2014-08-07)
+- Initial release
