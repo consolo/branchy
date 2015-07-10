@@ -5,9 +5,10 @@ module Branchy
     class Git
       extend ::Branchy::CLI
 
-      # Returns the git branch name
+      # Returns the git branch or tag name
       def self.branch
-        exec_or_raise('git symbolic-ref HEAD').sub('refs/heads/', '')
+        digest = exec_or_raise('git rev-parse HEAD')
+        exec_or_raise("git name-rev --name-only #{digest}").sub(/^tags\//, '').sub(/\^0$/, '')
       end
 
       # Returns true if it's the master/trunk/mainline branch.
