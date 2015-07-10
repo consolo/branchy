@@ -1,7 +1,7 @@
 == Branchy
 
 Branchy is a library for getting the name of the branch you're on. Lame, right? But its real purpose is to make it very easy to use
-the branched database pattern in Ruby, where each branch in your project has its own database. Rails was the original use-case, but
+the branched database pattern in Ruby, where each branch (and tag) in your project has its own database. Rails was the original use-case, but
 there's nothing Rails-specific in it - you should be able to use it with just about any Ruby ORM. That said, all examples assume
 Rails and ActiveRecord. Salt to taste.
 
