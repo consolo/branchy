@@ -1,3 +1,7 @@
+0.5.0 (2015-08-14)
+- fix issue where master/parent branch name would be found instead of the current branch (when no commits had been yet made in current branch)
+- improve finding name of tag when it shares a HEAD commit with it's originating branch
+
 0.4.0 (2015-07-10)
 - versions 0.1.0 - 0.3.1 previously existed on rubygems.org
 
