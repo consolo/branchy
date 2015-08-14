@@ -7,8 +7,7 @@ module Branchy
 
       # Returns the git branch or tag name
       def self.branch
-        digest = exec_or_raise('git rev-parse HEAD')
-        exec_or_raise("git name-rev --name-only #{digest}").sub(/^tags\//, '').sub(/\^0$/, '')
+        branch_name || tag_name
       end
 
       # Returns true if it's the master/trunk/mainline branch.
@@ -29,6 +28,19 @@ module Branchy
       # Disables a database for this git branch
       def self.disable!
         exec_or_raise("git config --bool branch.#{branch}.database false")
+      end
+
+      private
+
+      def self.branch_name
+        name = exec_or_raise('git rev-parse --abbrev-ref HEAD')
+        name == 'HEAD'.freeze ? nil : name
+      end
+
+      def self.tag_name
+        log = exec_or_raise("git reflog show --decorate -1")
+        match = log.match(/, tag: ([^,]+), /)
+        match ? match.captures[0] : nil
       end
     end
   end
