@@ -1,3 +1,6 @@
+0.6.0 (2016-02-17)
+- print the branch'd db name with the command "branchy --dbname mydb"
+
 0.5.0 (2015-08-14)
 - fix issue where master/parent branch name would be found instead of the current branch (when no commits had been yet made in current branch)
 - improve finding name of tag when it shares a HEAD commit with it's originating branch

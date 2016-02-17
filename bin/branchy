@@ -6,8 +6,12 @@ require 'branchy'
 options = {}
 o = OptionParser.new do |opts|
   opts.banner = 'Usage: branchy [options]'
-  opts.on('--enable', 'Enable a branched database for the current branch') { options[:command] = 'enable' }
-  opts.on('--disable', 'Disable a branched database for the current branch') { options[:command] = 'disable' }
+  opts.on('--dbname DB', 'Print the branch\'d name of the DB') do |db|
+    options[:command] = :dbname
+    options[:db] = db
+  end
+  opts.on('--enable', 'Enable a branched database for the current branch') { options[:command] = :enable }
+  opts.on('--disable', 'Disable a branched database for the current branch') { options[:command] = :disable }
   opts.on('--scm SCM', 'Set the SCM (defaults to git). Supported SCMs: git') { |scm| options[:scm] = scm.downcase.strip }
 end
 o.parse!
@@ -21,15 +25,17 @@ end
 
 begin
   case options[:command]
-    when 'enable'
-      puts "Enabling branched database"
-      branch.enable!
-    when 'disable'
-      puts "Disabling branched database"
-      branch.disable!
-    else
-      puts o.help
-      exit 1
+  when :dbname
+    puts branch.database(options[:db])
+  when :enable
+    puts "Enabling branched database"
+    branch.enable!
+  when :disable
+    puts "Disabling branched database"
+    branch.disable!
+  else
+    puts o.help
+    exit 1
   end
 rescue Branchy::CommandFailed => e
   $stderr.puts e.message
